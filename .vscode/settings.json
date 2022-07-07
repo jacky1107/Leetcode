@@ -50,6 +50,7 @@
         "xhash": "cpp",
         "xtree": "cpp",
         "algorithm": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "deque": "cpp"
     }
 }
