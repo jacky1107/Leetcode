@@ -55,13 +55,17 @@ inline: 適用於簡單的函數宣告
 # lvalue v.s. rvalue
 
 # Array v.s. Pointer
+Array配置的空間是連續的，pointer為不連續
 
 # const int* p v.s. int* const q
+前者是pointer且是const型態，代表p的值是唯讀的，不可更動
+後者是const pointer，表示pointer不可更動
 
 # Basic Question
 int a[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 int *p = &(a + 1)[3];
 printf("%d\n", *p);
+Ans: 5
 
 # ================
 printf("size of BYTE = %d\n \
@@ -71,26 +75,26 @@ size of int = %d\n \
 size of double = %d\n \
 size of unsigned char = %d\n \
 size of char = %d\n"
-,sizeof(BYTE)
-,sizeof(float)
-,sizeof(unsigned int)
-,sizeof(int)
-,sizeof(double)
-,sizeof(unsigned char)
-,sizeof(char));
+,sizeof(BYTE)          // 1
+,sizeof(float)         // 4
+,sizeof(unsigned int)  // 4
+,sizeof(int)           // 4
+,sizeof(double)        // 8
+,sizeof(unsigned char) // 1
+,sizeof(char));        // 1
 
 # ================
 int a[5]={1,2,3,4,5};
 int *p=a;
 *(p++)+=123;
 *(++p)+=123;
-a = {124, 2, 126, 4, 5} # Ans
+Ans: a = {124, 2, 126, 4, 5}
 
 # ================
 int a[5] ={1,2,3,4,5};
 int *p = (int *)(&a+1);
-*(a+1) = ?
-(*p-1) = ?
+*(a+1) = ? // unexpected
+(*p-1) = ? // 5
 
 # ================
 int x = 10, z = 3;
@@ -98,29 +102,43 @@ int *y;
 *y = 5;
 z = z + 1;
 x = x + *y;
-printf("x = %d\n", x);
-printf("*y = %d\n", *y);
-printf("z = %d\n", z);
+printf("x = %d\n", x);   // 15
+printf("*y = %d\n", *y); // 5
+printf("z = %d\n", z);   // 4
 
-y = &x;
-printf("y = %d\n", *y);
+y = &x;                  
+printf("y = %d\n", *y);  // 15
 
-&z = y;
+&z = y; // &z is lvalue, so this cannot access the value.
 printf("z = %d\n", z);
 
 # Question - Write a #define to print out ascii code of x.
+#define FUN(x) (#X[0]) // define不需要;號，#會將X轉換為字串
+printf("%d", FUN(a));  // %d就會將char轉成ascii code.
 
 # Question - Write sum of 1+2+4+7+...+n.
+最主要的就是 len = sizeof(arr) / sizeof(arr[0])
 
 # Question - Write a macro to find maximum value of two value.
+#define MAX(a, b) (a > b ? a : b) // 不需要加int
 
 # Question - Declare a constant with preprocessor macro #define to indicate how many seconds are in a year.
+#define SECONDS_PER_YEARS 60 * 60 * 24 * 365UL
+// 重點在於要加上UL，表示unsigned long，佔 4 bytes
+// 因為時間沒有負數且長度要大於2^16，因此要用4 bytes的型態去表示
+//  8 bits (unsigned):           255
+// 16 bits (unsigned):        65,535
+// 32 bits (unsigned): 4,294,967,295
+// 總時間為:              31,536,000
 
 # Question - Write a MARCO to calculate the square of integer a.
+#define square(x) (x * x)
 
 # Question - Reverse string
+把string分成一半，透過swap左右對調。
 
 # Question - 寫出改⼤⼩寫跟判斷⼤⼩寫的函數
+直接判斷字串'A' <= C，利用計數的方式，判斷大小寫數量。
 
 # Question - 利⽤c語⾔，將字串＊str2接序在*str1後
 
