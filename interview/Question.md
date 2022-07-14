@@ -141,8 +141,10 @@ printf("%d", FUN(a));  // %d就會將char轉成ascii code.
 直接判斷字串'A' <= C，利用計數的方式，判斷大小寫數量。
 
 # Question - 利⽤c語⾔，將字串＊str2接序在*str1後
+利用strcat(str1, str2)，它不會回傳而是加在str1後面，str1是char []的型態(然後要用"")。
 
 # Question - Detect Capital
+if ('A' <= s && s <= 'Z)
 
 # Question - 不⽤strlen判斷字串長度
 
